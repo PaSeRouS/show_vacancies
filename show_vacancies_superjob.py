@@ -3,7 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from mapping_result import mapping_result
+from mapping_result import display_table_of_result
 
 
 def show_sj_vacancies_info(api_key):
@@ -78,7 +78,7 @@ def show_sj_vacancies_info(api_key):
 
 		vacancies_for_language.update({language: vacancy_info})
 
-	mapping_result(vacancies_for_language, 'SuperJob Moscow')
+	display_table_of_result(vacancies_for_language, 'SuperJob Moscow')
 
 
 def predict_rub_salary_for_superjob(vacancy):

@@ -1,7 +1,7 @@
 from terminaltables import SingleTable
 
 
-def mapping_result(results, title):
+def display_table_of_result(results, title):
 	table_data = [
 		['Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']
 	]

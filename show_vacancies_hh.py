@@ -1,6 +1,6 @@
 import requests
 
-from mapping_result import mapping_result
+from mapping_result import display_table_of_result
 
 
 def show_hh_vacancies_info():
@@ -75,7 +75,7 @@ def show_hh_vacancies_info():
 
 			vacancies_for_language.update({language: vacancy_info})
 
-	mapping_result(vacancies_for_language, 'HeadHunter Moscow')
+	display_table_of_result(vacancies_for_language, 'HeadHunter Moscow')
 
 
 def predict_rub_salary_for_hh(vacancy):
