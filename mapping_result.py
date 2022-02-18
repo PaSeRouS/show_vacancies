@@ -13,7 +13,7 @@ def display_table_of_result(results, title):
         language_result.append(results[language]['vacancies_processed'])
         language_result.append(results[language]['average_salary'])
 
-	    table_data.append(language_result)
+        table_data.append(language_result)
 
     table_instance = SingleTable(table_data, title)
     print(table_instance.table)
