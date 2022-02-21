@@ -28,9 +28,7 @@ def get_pages_data(language, url, headers):
         if page >= 4: # Так как можно только 500 результатов
             break
 
-    total_vacancies = page_data['total']
-
-    return vacancies, total_vacancies
+    return vacancies, page_data['total']
 
 
 def get_sj_vacancies_info(api_key, language):

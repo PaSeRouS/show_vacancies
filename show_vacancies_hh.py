@@ -26,9 +26,7 @@ def get_pages_data(language, url):
         if page >= (page_data['pages'] - 1):
             break
 
-    total_vacancies = page_data['found']
-
-    return vacancies, total_vacancies
+    return vacancies, page_data['found']
 
 
 def get_hh_vacancies_info(language):
