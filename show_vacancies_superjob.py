@@ -11,7 +11,7 @@ from predict_rub_salary import predict_rub_salary
 def get_pages_data(language, url, headers):
     vacancies = []
 
-    for page in count(0): # Так как можно только 500 результатов
+    for page in count(0):
         page_params = {
             'keyword' : language,
             'town' : 'Москва',
@@ -23,13 +23,14 @@ def get_pages_data(language, url, headers):
         page_response.raise_for_status()
 
         page_data = page_response.json()
-		
-        if page > 4:
-            break
-	
         vacancies.append(page_data['objects'])
 
-    return vacancies
+        if page >= 4: # Так как можно только 500 результатов
+            break
+
+    total_vacancies = page_data['total']
+
+    return vacancies, total_vacancies
 
 
 def get_sj_vacancies_info(api_key, language):
@@ -49,10 +50,7 @@ def get_sj_vacancies_info(api_key, language):
         'town': 'Москва'
     }
 
-    response = requests.get(vacancies_url, headers=headers, params=vacancies_params)
-    response.raise_for_status()
-
-    vacancies = get_pages_data(language, vacancies_url, headers)
+    vacancies, total_vacancies = get_pages_data(language, vacancies_url, headers)
 
     for page in vacancies:
         for vacancy in page:
@@ -60,7 +58,7 @@ def get_sj_vacancies_info(api_key, language):
                 sum_salary += predict_rub_salary(vacancy['payment_from'], vacancy['payment_to'])
                 vacancies_processed += 1
 
-    vacancy_info['vacancies_found'] = response.json()['total']
+    vacancy_info['vacancies_found'] = total_vacancies
     vacancy_info['vacancies_processed'] = vacancies_processed
     vacancy_info['average_salary'] = int(sum_salary/vacancies_processed)
 	

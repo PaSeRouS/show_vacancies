@@ -21,12 +21,14 @@ def get_pages_data(language, url):
         page_response.raise_for_status()
 
         page_data = page_response.json()
-        if page >= (page_data['pages'] - 1):
-            break
-	
         vacancies.append(page_data['items'])
 
-    return vacancies
+        if page >= (page_data['pages'] - 1):
+            break
+
+    total_vacancies = page_data['found']
+
+    return vacancies, total_vacancies
 
 
 def get_hh_vacancies_info(language):
@@ -43,10 +45,7 @@ def get_hh_vacancies_info(language):
         'period' : 30
     }
 
-    response = requests.get(vacancies_url, params=vacancies_params)
-    response.raise_for_status()
-
-    vacancies = get_pages_data(language, vacancies_url)
+    vacancies, total_vacancies = get_pages_data(language, vacancies_url)
 
     for page in vacancies:
         for vacancy in page:
@@ -54,7 +53,7 @@ def get_hh_vacancies_info(language):
                 sum_salary += predict_rub_salary(vacancy['salary']['from'], vacancy['salary']['to'])
                 vacancies_processed += 1
 
-    vacancy_info['vacancies_found'] = response.json()['found']
+    vacancy_info['vacancies_found'] = total_vacancies
     vacancy_info['vacancies_processed'] = vacancies_processed
     vacancy_info['average_salary'] = int(sum_salary/vacancies_processed)
 

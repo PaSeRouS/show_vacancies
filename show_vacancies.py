@@ -30,20 +30,15 @@ if __name__ == '__main__':
         'JavaScript'
     ]
 
-    recruit_company = [
-        'HeadHunter Moscow',
-        'SuperJob Moscow'
-    ]
+    vacancies_hh_for_language = {}
+    vacancies_sj_for_language = {}
 
-    for company in recruit_company:
-        vacancies_for_language = {}
+    for language in languages_of_programming:
+        vacancy_info = get_hh_vacancies_info(language)
+        vacancies_hh_for_language.update({language: vacancy_info})
 
-        for language in languages_of_programming:
-            if company == 'HeadHunter Moscow':
-                vacancy_info = get_hh_vacancies_info(language)
-            elif company == 'SuperJob Moscow':
-                vacancy_info = get_sj_vacancies_info(superjob_api, language)
+        vacancy_info = get_sj_vacancies_info(superjob_api, language)
+        vacancies_sj_for_language.update({language: vacancy_info})
 
-            vacancies_for_language.update({language: vacancy_info})
-
-        display_table_of_result(vacancies_for_language, company)
+    display_table_of_result(vacancies_hh_for_language, 'HeadHunter Moscow')
+    display_table_of_result(vacancies_sj_for_language, 'SuperJob Moscow')
